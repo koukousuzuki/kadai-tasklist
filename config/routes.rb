@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'session#destory'
   
   get 'signup', to: 'tasks#new'
-  resources :tasks, only: [:index, :show, :new, :create]
+  
+  resources :tasks
 end
