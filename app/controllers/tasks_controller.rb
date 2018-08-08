@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
+  before_action :require_user_logged_in
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:index,:show,:create]
-  before_action :current_user, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:show, :edit, :destroy]
 
   def index
     if @current_user
@@ -21,7 +22,7 @@ class TasksController < ApplicationController
     
     if @task.save
       flash[:success] = 'Taskが正常に投稿されました'
-      redirect_to @task
+      redirect_to root_url
     else
       flash.now[:danger] = 'Taskが投稿されませんでした'
       render :new
@@ -45,7 +46,7 @@ class TasksController < ApplicationController
     @task.destroy
     session[:task_id] = nil
     flash[:success] = 'Taskは正常に削除されました'
-    redirect_to tasks_url
+    redirect_to root_url
   end
   
   private
@@ -69,6 +70,3 @@ class TasksController < ApplicationController
     end
   end
 end
-
-
-

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718074514) do
+ActiveRecord::Schema.define(version: 20180808134807) do
+
+  create_table "lists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lists_on_user_id", using: :btree
+  end
 
   create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
@@ -29,5 +37,6 @@ ActiveRecord::Schema.define(version: 20180718074514) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "lists", "users"
   add_foreign_key "tasks", "users"
 end
